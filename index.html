@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Dashboard</title>
+
+  <!-- Tailwind + DaisyUI -->
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.2/dist/full.min.css" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Handlebars -->
+  <script src="https://cdn.jsdelivr.net/npm/handlebars@latest/dist/handlebars.js"></script>
+</head>
+<body class="bg-base-200">
+
+<!-- SIMPLE HANDLEBARS TEMPLATE -->
+<script id="simple-dashboard" type="text/x-handlebars-template">
+
+  <!-- Drawer for sidebar -->
+  <div class="drawer lg:drawer-open">
+    <input id="menu-drawer" type="checkbox" class="drawer-toggle" />
+
+    <!-- Main Content Area -->
+    <div class="drawer-content">
+
+      <!-- Mobile navbar with hamburger button -->
+      <div class="bg-base-100 p-4 flex items-center lg:hidden shadow">
+        <label for="menu-drawer" class="btn btn-ghost">
+          ☰
+        </label>
+        <span class="ml-3 font-bold text-lg">Dashboard</span>
+      </div>
+
+      <!-- Content -->
+      <div class="p-4">
+        <h1 class="text-xl font-bold mb-4">Hello, {{user}}</h1>
+
+        <!-- Cards Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {{#each cards}}
+          <div class="card bg-base-100 shadow">
+            <div class="card-body">
+              <h2 class="card-title">{{title}}</h2>
+              <p>{{description}}</p>
+              <button class="btn btn-primary">Open</button>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="drawer-side">
+      <label for="menu-drawer" class="drawer-overlay"></label>
+
+      <div class="w-64 bg-base-100 min-h-full">
+        <!-- Header row with Close button for mobile -->
+        <div class="flex justify-between items-center p-4 border-b">
+          <h2 class="font-bold text-lg">Menu</h2>
+          <label for="menu-drawer" class="btn btn-sm btn-ghost lg:hidden">✕</label>
+        </div>
+
+        <!-- Sidebar links -->
+        <ul class="menu p-4">
+          <li><a>Dashboard</a></li>
+          <li><a>Students</a></li>
+          <li><a>Attendance</a></li>
+          <li><a>Settings</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+</script>
+
+<!-- HANDLER CODE TO LOAD DATA INTO TEMPLATE -->
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var templateSource = document.getElementById("simple-dashboard").innerHTML;
+    var template = Handlebars.compile(templateSource);
+
+    // Simple beginner-friendly data object
+    var data = {
+      user: "Santosh",
+      cards: [
+        { title: "Attendance", description: "Check class attendance." },
+        { title: "Placement", description: "See placement updates." },
+        { title: "Reports", description: "Generate simple reports." },
+        { title: "Credit Course", description: "Apply for credit course." },
+        { title: "Academic Result", description: "Check your Academic Result" },
+        { title: "Exam", description: "Exam Dates and Exam News" },
+        { title: "Alumni", description: "Alumni Details" },
+        { title: "Certifications", description: "Certification Links." },
+        { title: "Events", description: "Latest Events" }
+      ]
+    };
+
+    var html = template(data);
+    document.body.innerHTML = html;
+  });
+</script>
+
+</body>
+</html>
